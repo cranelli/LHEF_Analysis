@@ -3,6 +3,7 @@ CVS
 __init__.py
 *~
 *.root
+*.lhe
 *.png
 *.ps
 *.pyc
