@@ -1,0 +1,20 @@
+#
+# Finding Scale where aQGC Couplings become important
+#
+Have written a script to automatically generate madgraph events for
+the LNuAA signal.
+In Scripts Directory:
+./LNuAAsub.sh
+If coupling is significant, the output is stored in:
+RootFiles/LNuAA_aQGC_Histograms
+
+#
+# Reweighting
+#
+step0_None.py and testReader_cfg.py are both capable of taking a reweighted 
+lhe file and converting it into an EDM formatted root file.
+reweighted_events_test_Step0.root and reweighted_events_test.root respectively.
+
+reweight_edmtoroottree_cfg.py is the config file for running the lnuaa_analyzer
+which take the EDM format root file, and stores the information in a simple 
+tree.
