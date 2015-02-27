@@ -2,6 +2,8 @@
 #include "TH1F"
 #include <iostream>
 
+#include "plotHistsAndRatio.C"
+
 /*
  * Quick Macro to Overlay Two Histograms
  * First One is Plotted in Blue
@@ -9,15 +11,15 @@
  */
 TH1F * DrawOverflowBin(TH1F * h);
 
-//const char* root_direct_name = "../LNuAA_SM_LHEFTreeLoop.root";
-//const char* hist_direct_name = "h1_LNuAA_SM_PhoLeadPt_Weighted";
+const char* root_direct_name = "../LNuAA_SM_LHEFTreeLoop.root";
+const char* hist_direct_name = "h1_LNuAA_SM_PhoLeadPt_Weighted";
 
-const char* root_direct_name = "../LNuAA_LM3_500_LHEFTreeLoop.root";
-const char* hist_direct_name = "h1_LNuAA_LM3_500_PhoLeadPt_Weighted";
+//const char* root_direct_name = "../LNuAA_LM3_500_LHEFTreeLoop.root";
+//const char* hist_direct_name = "h1_LNuAA_LM3_500_PhoLeadPt_Weighted";
 
 const char* root_reweight_name = "../LNuAA_LM3_Reweight_Histograms.root";
-//const char* hist_reweight_name = "h1PhoLeadPt_Weight2";
-const char* hist_reweight_name = "h1PhoLeadPt_Weight4";
+const char* hist_reweight_name = "h1PhoLeadPt_Weight2";
+//const char* hist_reweight_name = "h1PhoLeadPt_Weight4";
 
 
 //const char* hist_SM_Name = "h1_LNuAA_SM_1.0e-8_PhoLeadPtWeighted";
@@ -34,9 +36,8 @@ void Reweighting_OverlayCheck(){
   histDirect_Overflow->SetTitle("Comparison of Reweighted to Direct");
   //histDirect->GetXaxis()->SetTitle("Lead Photon Pt");
   //histDirect->GetYaxis()->SetTitle("Weighted Counts");
-  //histDirect->Rebin(80); //Rebin to 40 GeV per bin
   //histDirect->Draw();
-  histDirect_Overflow->Draw();
+  //histDirect_Overflow->Draw();
 
   
   TFile * root_reweight = TFile::Open(root_reweight_name, "READ");
@@ -44,9 +45,13 @@ void Reweighting_OverlayCheck(){
   TH1F * histReweight_Overflow=DrawOverflowBin(histReweight);
   
   histReweight_Overflow->SetLineColor(kRed);
-  //histReweight->Rebin(80); //Rebin to 40 GeV per bin
-  histReweight_Overflow->Draw("same");  
+  //histReweight_Overflow->Draw("same");  
   //rootFile->Close();
+
+  plotHistsAndRatio(histReweight_Overflow, histDirect_Overflow, 
+		    "Comparison of Reweighted to Direct for SM",
+		    "Lead Photon Pt", "Weighted Events");
+
 }
 
 

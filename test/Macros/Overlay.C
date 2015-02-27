@@ -2,6 +2,7 @@
 #include "TH1F"
 #include <iostream>
 #include "AddOverFlow.C"
+#include "plotHistsAndRatio.C"
 
 /*
  * Quick Macro to Overlay Two Histograms
@@ -34,9 +35,8 @@ void Overlay(){
   hist_Weight2_Overflow->SetLineColor(kBlack);
   hist_Weight2_Overflow->Draw();
 
-  TH1F * hist_Weight3 = rootFile->Get(hist_Weight3_Name);
-  
-  TH1F * histWeight2_Overflow;
+  TH1F * hist_Weight3 = rootFile->Get(hist_Weight3_Name);  
+  TH1F * histWeight3_Overflow;
   hist_Weight3_Overflow= DrawOverflowBin(hist_Weight3);
   hist_Weight3_Overflow->SetLineColor(kBlue);
   hist_Weight3_Overflow->Draw("same");
@@ -46,18 +46,36 @@ void Overlay(){
   hist_Weight4_Overflow= DrawOverflowBin(hist_Weight4);
   hist_Weight4_Overflow->SetLineColor(kRed);
   hist_Weight4_Overflow->Draw("same");
-  
-  /*
-  TH1F * hist_Weight2 = rootFile->Get(hist_Weight2_Name);
-  hist_Weight2->SetLineColor(kGreen);
-  hist_Weight2->Rebin(80); //Rebin to 40 GeV per bin
-  hist_Weight2->Draw("same");
+  // hist_Weight4_Overflow->Draw("same");
+  //plotHistsAndRatio(hist_Weight4_Overflow, hist_Weight2_Overflow, 
+  //	    "Comparison of Reweighted aQGC LM3=500 to LM3=0",
+  //	    "Lead Photon Pt", "Weighted Events");
+  //plotHistsAndRatio(hist_Weight3_Overflow, hist_Weight2_Overflow, 
+  //		    "Comparison of Reweighted aQGC LM3=50 to LM3=0",
+  //	    "Lead Photon Pt", "Weighted Events");
 
-  TH1F * hist_Weight3 = rootFile->Get(hist_Weight3_Name);
-  hist_Weight3->SetLineColor(kYellow);
-  hist_Weight3->Rebin(80); //Rebin to 40 GeV per bin
-  hist_Weight3->Draw("same");
-  */
+  
+  TH1F * hist_Weight0 = rootFile->Get(hist_Weight0_Name);
+  TH1F * histWeight0_Overflow;
+  hist_Weight0_Overflow= DrawOverflowBin(hist_Weight0);
+  hist_Weight0_Overflow->SetLineColor(kGreen);
+  hist_Weight0_Overflow->Draw("same");
+  
+
+  TH1F * hist_Weight1 = rootFile->Get(hist_Weight1_Name);
+  TH1F * histWeight1_Overflow;
+  hist_Weight1_Overflow= DrawOverflowBin(hist_Weight1);
+  hist_Weight1_Overflow->SetLineColor(kYellow);
+  hist_Weight1_Overflow->Draw("same");  
+
+
+  leg = new TLegend(0.1,0.7,0.48,0.9);
+  leg->AddEntry(hist_Weight0_Overflow,"LM3=-500");
+  leg->AddEntry(hist_Weight1_Overflow,"LM3=-50");
+  leg->AddEntry(hist_Weight2_Overflow,"LM3=0");
+  leg->AddEntry(hist_Weight3_Overflow,"LM3=50");
+  leg->AddEntry(hist_Weight4_Overflow,"LM3=500");
+  leg->Draw();
 
   //rootFile->Close();
 }
